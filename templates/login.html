@@ -1,0 +1,36 @@
+
+{%extends 'base.html'%}
+{%include 'navbar.html'%}
+
+{%block title%}
+    Login
+{%endblock%}
+
+{%block content%}
+
+        {% for message in get_flashed_messages() %}
+       <div class="alert alert-warning col-6 row-5" role="alert"
+            style="position: relative; top:150px; left:25%">
+             {{message}}
+        </div>
+        {%endfor%}
+
+        <div class="mt-5" style="position: relative; top:100px; left:25%;">
+            <form method="post">
+                {{form.hidden_tag()}}
+                <div class="col-4 mb-3">
+                    {{form.email.label(class="form-label")}}
+                    {{form.email(class="form-control")}}
+                </div>
+                 <div class="col-4 mb-3">
+                    {{form.password.label(class="form-label")}}
+                    {{form.password(class="form-control")}}
+                </div>
+                 <div class="col-4 mt-5">
+                    {{form.login(class="btn btn-primary")}}
+                 </div>
+            </form>
+        </div>
+
+
+{%endblock%}
