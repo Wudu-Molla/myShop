@@ -16,7 +16,7 @@ class Product(db.Model):
     price = db.Column(db.Integer, nullable=False)
     image_url = db.Column(db.String(512), nullable=False)
     size = db.Column(db.String(48), nullable=False)
-    # category = db.Column(db.String(48), nullable=False)
+    category = db.Column(db.String(48), nullable=False)
 
     def __repr__(self):
         return f'id: {self.id}, title: {self.title}, barcode: {self.barcode}, description: {self.description}, ' \
@@ -31,8 +31,6 @@ class Cart(db.Model):
     price = db.Column(db.Integer, nullable=False)
     image_url = db.Column(db.String(512), nullable=False)
     size = db.Column(db.String(48), nullable=False)
-    # user_id = db.Column(db.Integer, db.ForeignKey('cart.id'),
-    #                     nullable=False)
 
     def __repr__(self):
         return f'id: {self.id}, title: {self.title}, barcode: {self.barcode}, description: {self.description}, ' \
@@ -43,8 +41,6 @@ class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(256), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
-
-    # cart = db.relationship('Cart', backref='cart', lazy=True)
 
     def __repr__(self):
         return f'id: {self.id}, email: {self.email}'

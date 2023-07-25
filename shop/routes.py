@@ -86,7 +86,8 @@ def add_product():
                                barcode=form.barcode.data,
                                size=form.size.data,
                                image_url=form.image.data,
-                               description=form.description.data))
+                               description=form.description.data,
+                               category=form.category.data))
         db.session.commit()
 
     form.title.data = ''
