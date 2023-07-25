@@ -5,11 +5,13 @@
 Login
 {%endblock%}
 {%block content%}
-    {%for message in get_flashed_messages()%}
-    <div class="alert alert-warning" role="alert">
-         {{message}}
-    </div>
+    {% for message in get_flashed_messages() %}
+       <div class="alert alert-warning col-6 row-5" role="alert"
+            style="position: relative; top:150px; left:25%;">
+             {{message}}
+        </div>
     {%endfor%}
+
     <div class="mt-5" style="position:relative; top:150px; left:30%;">
         <form method="post">
             {{form.hidden_tag()}}

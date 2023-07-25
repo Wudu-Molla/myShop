@@ -43,7 +43,7 @@ def login():
                 flash('Login successfully', category='success')
                 return redirect(url_for('home'))
             else:
-                flash('Incorrect password' + user.email)
+                flash('Incorrect password ' + user.email)
         else:
             flash('Invalid username', category='danger')
             redirect(url_for('login'))
@@ -58,7 +58,6 @@ def logout():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    db.create_all()
     form = SignupForm()
     if form.validate_on_submit():
         user = Users.query.filter_by(email=form.email.data).first()
@@ -68,10 +67,12 @@ def signup():
                 db.session.add(Users(email=form.email.data, password=password_hash))
                 db.session.commit()
                 flash("Successfully created")
+                redirect(url_for('login'))
             else:
                 flash('Passwords are not matching')
         else:
             flash('User already exists')
+            redirect(url_for('signup'))
     return render_template('signup.html', form=form)
 
 
