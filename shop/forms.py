@@ -51,4 +51,4 @@ class AddToCart(FlaskForm):
 
 
 class RemoveFromCart(FlaskForm):
-    remove = SubmitField()
+    remove = SubmitField("")
