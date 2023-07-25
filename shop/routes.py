@@ -1,84 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, login_required, UserMixin
-from flask_login import login_user, current_user, logout_user
-from forms import SignupForm, AddForm, SignInForm, AddToCart
-from forms import RemoveFromCart
-from flask_migrate import Migrate
+from flask import render_template, request, redirect, url_for, flash
+from . import app, db
+from flask_login import login_required
+from .models import Product, Users, Cart
+from .forms import SignupForm, AddForm, SignInForm, AddToCart
+from .forms import RemoveFromCart
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
-import psycopg2
-from dotenv import load_dotenv
-
-load_dotenv('./.flaskenv')
-app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
-# 'postgresql://wudu:Wm867943322@localhost/shop'
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.session_protection = "strong"
-login_manager.login_view = 'login'
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Users.query.get(int(user_id))
-
-
-class Product(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    title = db.Column(db.String(256), nullable=False)
-    barcode = db.Column(db.String(24), nullable=False, unique=True)
-    description = db.Column(db.String(1024))
-    price = db.Column(db.Integer, nullable=False)
-    image_url = db.Column(db.String(512), nullable=False)
-    size = db.Column(db.String(48), nullable=False)
-
-    # category = db.Column(db.String(48), nullable=False)
-
-    def __repr__(self):
-        return f'id: {self.id}, title: {self.title}, barcode: {self.barcode}, description: {self.description}, ' \
-               f'Image: {self.image}, price: {self.price}, size: {self.size}'
-
-
-class Cart(db.Model):
-    id = db.Column(db.Integer, primary_key=True, nullable=False)
-    title = db.Column(db.String(256), nullable=False)
-    barcode = db.Column(db.String(24), nullable=False, unique=True)
-    description = db.Column(db.String(1024))
-    price = db.Column(db.Integer, nullable=False)
-    image_url = db.Column(db.String(512), nullable=False)
-    size = db.Column(db.String(48), nullable=False)
-
-    # user_id = db.Column(db.Integer, db.ForeignKey('cart.id'),
-    #                     nullable=False)
-
-    def __repr__(self):
-        return f'id: {self.id}, title: {self.title}, barcode: {self.barcode}, description: {self.description}, ' \
-               f'Image: {self.image}, price: {self.price}, size: {self.size}'
-
-
-class Users(UserMixin, db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(256), nullable=False, unique=True)
-    password = db.Column(db.String(256), nullable=False)
-
-    # cart = db.relationship('Cart', backref='cart', lazy=True)
-
-    def __repr__(self):
-        return f'id: {self.id}, email: {self.email}'
-
-
-#
-# @app.context_processor
-# def base():
-#     # form = SearchForm()
-#     form = AddForm()
-#     return dict(form=form)
+from flask_login import login_user, logout_user
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -201,7 +128,3 @@ def dashboard():
 def error_404(e):
     return render_template('404.html'), 404
 
-
-if __name__ == '__main__':
-    app.config['DEBUG'] = 1
-    app.run()

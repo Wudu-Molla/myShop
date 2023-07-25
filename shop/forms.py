@@ -28,11 +28,11 @@ class AddForm(FlaskForm):
     description = TextAreaField('Description')
     category = SelectField('Category', choices=('Shoes', 'Hats', 'Clothes'))
     submit = SubmitField('submit')
-    #
-    # def validate_barcode(barcode):
-    #     product = Product.query.filter_by(barcode=barcode.data).first()
-    #     if product:
-    #         raise ValidationError('Barcode already exists!')
+
+    def validate_barcode(barcode):
+        product = Product.query.filter_by(barcode=barcode.data).first()
+        if product:
+            raise ValidationError('Barcode already exists!')
 
 
 class SearchForm(FlaskForm):
