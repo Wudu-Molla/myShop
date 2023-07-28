@@ -105,7 +105,7 @@ def add_product():
 def item():
     barcode = request.args.get('search', '')
     items = Product.query.filter_by(barcode=barcode).all()
-    item_id = request.args.get('item')
+    item_id = request.args.get('cart')
     item_by_id = Product.query.filter_by(id=item_id).all()
     return render_template('item.html', items=items, cart_items=item_by_id)
 
