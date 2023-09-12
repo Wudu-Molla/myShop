@@ -2,33 +2,28 @@
 {%include 'navbar.html'%}
 {%block content%}
         {%for product in items %}
-            <main style="width: 100vw;
-                         height: 100vh;
-                         display: flex;
-                         justify-content: center;
-                         align-items: flex-start;
-                         background: linear-gradient(to right top, #2453fa, #487ffa);">
-                <div class="item-card" style="position:relative; top:15%;">
-                <div class="item-image">
-                    <img src="{{product.image_url}}" class="card-img-top" alt="...">
-                </div>
-                    <div class="item-content card-body justify-content-between">
-                    <h5 class="card-title">{{product.title}}</h5>
-                    <p class="card-text">Price: {{product.price}}$</p>
-                    <p class="card-text">Barcode: {{product.barcode}}</p>
-                    <p class="card-text">Size: {{product.size}}</p>
-                    <hr>
-                    {% for par in product.description.split('.')%}
-                        {% if par != ''%}
-                            <p>{{par}}.</p>
-                        {%endif%}
-                    {%endfor%}
-                    </li>
 
-                    </div>
-                </div>
+            <div class="item-card" style="position:relative; top:15%;">
+            <div class="item-image">
+                <img src="{{product.image_url}}" class="card-img-top" alt="...">
+            </div>
+                <div class="item-content card-body justify-content-between">
+                <h5 class="card-title">{{product.title}}</h5>
+                <p class="card-text">Price: {{product.price}}$</p>
+                <p class="card-text">Barcode: {{product.barcode}}</p>
+                <p class="card-text">Size: {{product.size}}</p>
+                <hr>
+                {% for par in product.description.split('.')%}
+                    {% if par != ''%}
+                        <p>{{par}}.</p>
+                    {%endif%}
+                {%endfor%}
+                </li>
 
-            </main>
+                </div>
+            </div>
+
+
         {%endfor%}
     {%for cart in cart_items %}
         <main style="width: 100vw;

@@ -25,27 +25,20 @@
           <div class="row">
             {%block content%}
                 {% for item in data%}
-                    <main style="width: 100vw;
-                     height: 100vh;
-                     display: flex;
-                     justify-content: center;
-                     align-items: flex-start;
-                     background: linear-gradient(to right top, #2453fa, #487ffa);">
-                        <div class="item-card" style="position:relative; top:15%;">
-                        <div class="item-image">
-                            <img src="{{item.image_url}}" class="card-img-top" alt="...">
+                    <div class="item-card" style="position:relative; top:15%;">
+                    <div class="item-image">
+                        <img src="{{item.image_url}}" class="card-img-top" alt="...">
+                    </div>
+                        <div class="item-content card-body justify-content-between">
+                        <h5 class="card-title">{{item.title}}</h5>
+                        <p class="card-text">Price: {{item.price}}$</p>
+                        <a name="show" href="{{url_for('item', item=item.id)}}" class="btn btn-primary">Show</a>
+                        <form method="post" action="{{url_for('home', item=item.id)}}" class="mt-5">
+                            {{form.hidden_tag()}}
+                            {{form.addToCart(class="btn btn-primary", type="submit" )}}
+                        </form>
                         </div>
-                            <div class="item-content card-body justify-content-between">
-                            <h5 class="card-title">{{item.title}}</h5>
-                            <p class="card-text">Price: {{item.price}}$</p>
-                            <a name="show" href="{{url_for('item', item=item.id)}}" class="btn btn-primary">Show</a>
-                            <form method="post" action="{{url_for('home', item=item.id)}}" class="mt-5">
-                                {{form.hidden_tag()}}
-                                {{form.addToCart(class="btn btn-primary", type="submit" )}}
-                            </form>
-                            </div>
-                        </div>
-                    </main>
+                    </div>
 
                     {%endfor%}
                 {% endblock %}
